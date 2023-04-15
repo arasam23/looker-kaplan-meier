@@ -64,4 +64,9 @@ view: vetarans_survival_rate_group {
     type: count
     drill_fields: []
   }
+
+  measure: cumulative_survival_m {
+    type: sum
+    drill_fields: [time,celltype,cumulative_survival,survival_rate]
+  }
 }
