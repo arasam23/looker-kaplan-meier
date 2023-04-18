@@ -15,12 +15,29 @@ view: vetarans_survival_rate_group {
     type: number
     sql: ${TABLE}.celltype ;;
   }
-  dimension: celltype_derived {
-    type: string
-    description: "Derived celltype dimension"
-    expression: "CASE WHEN celltype = 1 THEN 'squamous' WHEN celltype = 2 THEN 'smallcell' WHEN celltype = 3 THEN 'adeno' WHEN celltype = 4 THEN 'large' END";;
-  }
 
+  dimension: celltype_derived {
+    case: {
+      when: {
+        sql: ${TABLE}.celltype =1 ;;
+        label: "squamous"
+      }
+      when: {
+        sql: ${TABLE}.celltype =2 ;;
+        label: "smallcell"
+      }
+      when: {
+        sql: ${TABLE}.celltype =3 ;;
+        label: "adeno"
+      }
+      when: {
+        sql: ${TABLE}.celltype =4 ;;
+        label: "large"
+      }
+      # possibly more when statements
+      else: "N/At"
+    }
+  }
   # A measure is a field that uses a SQL aggregate function. Here are defined sum and average
   # measures for this dimension, but you can also add measures of many different aggregates.
   # Click on the type parameter to see all the options in the Quick Help panel on the right.
